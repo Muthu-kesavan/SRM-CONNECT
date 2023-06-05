@@ -1,35 +1,89 @@
-// server.js
-const express = require('express');
+const express = require("express");
+const mongoose = require("mongoose");
+const User = require("./models/user");
+const path = require("path");
+
 const app = express();
-const http = require('http').Server(app);
-const io = require('socket.io')(http);
+const PORT = process.env.PORT || 3000;
 
-// Serve static files from the 'public' directory
-app.use(express.static('public'));
-
-// Route to serve the HTML file
-app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/public/index.html');
+// Connect to the MongoDB database
+mongoose.connect("mongodb://localhost:27017/chatapp", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true
+}).then(() => {
+  console.log("Connected to MongoDB");
+}).catch((error) => {
+  console.error("MongoDB connection error:", error);
 });
 
-// Listen for incoming socket connections
-io.on('connection', (socket) => {
-  console.log('A user connected');
+app.use(express.json());
 
-  // Listen for chat messages
-  socket.on('chat message', (message) => {
-    // Broadcast the message to all connected clients
-    io.emit('chat message', message);
-  });
+// Serve static files from the "public" directory
+app.use(express.static(path.join(__dirname, "public")));
 
-  // Listen for disconnection
-  socket.on('disconnect', () => {
-    console.log('A user disconnected');
-  });
+// Root URL endpoint
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
-// Start the server
-const port = 3000;
-http.listen(port, () => {
-  console.log(`Server listening on port ${port}`);
+// Register endpoint
+app.post("/register", async (req, res) => {
+  const { username, email, mobileNumber, password } = req.body;
+
+  // Check if the email ends with "@srmist.edu.in"
+  if (!email.endsWith("@srmist.edu.in")) {
+    return res.status(400).json({ message: "Invalid email format" });
+  }
+
+  try {
+    // Check if the user already exists
+    const existingUser = await User.findOne({ email: email });
+    if (existingUser) {
+      return res.status(400).json({ message: "Email already registered" });
+    }
+
+    // Create a new user document
+    const user = new User({
+      username: username,
+      email: email,
+      mobileNumber: mobileNumber,
+      password: password
+    });
+
+    // Save the user document to the database
+    await user.save();
+
+    res.json({ message: "Registration successful" });
+  } catch (error) {
+    console.error("Registration error:", error);
+    res.status(500).json({ message: "Registration failed" });
+  }
+});
+
+// Login endpoint
+app.post("/login", async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    // Check if the user exists
+    const user = await User.findOne({ email: email });
+    if (!user) {
+      return res.status(400).json({ message: "Invalid email or password" });
+    }
+
+    // Check if the password is correct
+    if (user.password !== password) {
+      return res.status(400).json({ message: "Invalid email or password" });
+    }
+
+    res.json({ message: "Login successful" });
+  } catch (error) {
+    console.error("Login error:", error);
+    res.status(500).json({ message: "Login failed" });
+  }
+});
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
