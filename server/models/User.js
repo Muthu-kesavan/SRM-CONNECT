@@ -21,7 +21,6 @@ const UserSchema = new mongoose.Schema(
         campus:{
             type: String,
             required: true
-
         },
         password:{ 
             type: String,
