@@ -1,5 +1,6 @@
 import { handleError } from "../error.js";
 import User from "../models/User.js";
+import Post from "../models/Post.js";
 
 
 
@@ -36,6 +37,7 @@ export const update = async(req, res, next) => {
     if (req.params.id === req.user.id) {
       try{
           await User.findByIdAndDelete(req.params.id);
+          await Post.remove({ userId: req.params.id });
         res.status(200).json("User delete");
   
       } catch(err) {

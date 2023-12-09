@@ -10,7 +10,7 @@ const PostSchema = new mongoose.Schema(
       description: {
           type: String,
           required: true,
-          max: 300,
+          max: 350,
       },
       likes: {
           type: Array,
