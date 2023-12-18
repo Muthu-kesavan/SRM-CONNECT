@@ -13,13 +13,34 @@ const PostSchema = new mongoose.Schema(
           max: 350,
       },
       likes: {
-          type: Array,
+          type:[mongoose.Schema.Types.ObjectId],
+          ref: "User",
           defaultValue: [],
       },
       views: {
         type: Array,
         defaultValue: [],
       },
+      replies: [
+        {
+            userId: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "User",
+                required: true,
+            },
+            text: {
+                type: String,
+                required: true,
+            },
+            userProfilePic: {
+                type: String,
+            },
+            username: {
+                type: String,
+            },
+        },
+    ],
+
    },
    { timestamps: true  }
   );

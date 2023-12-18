@@ -106,3 +106,30 @@ export const incrementUniquePostViews = async (req, res, next) => {
     handleError(500, err);
   }
 };
+
+export const replyToPost = async (req,res)=> {
+  try{
+    const {text} = req.body;
+    const postId = req.params.id;
+    const userId = req.body.userId;
+  
+
+    if (!text) {
+			return res.status(400).json({ error: "Text field is required" });
+		}
+
+		const post = await Post.findById(postId);
+		if (!post) {
+			return res.status(404).json({ error: "Post not found" });
+		}
+
+		const reply = { userId, text};
+
+		post.replies.push(reply);
+		await post.save();
+
+		res.status(200).json(reply);
+	} catch (err) {
+		res.status(500).json({ error: err.message });
+  }
+}
