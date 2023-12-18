@@ -98,7 +98,7 @@ export const incrementUniquePostViews = async (req, res, next) => {
       post.views.push(userId); 
       post.views += 1; 
       await post.save();
-      res.status(200).json('Unique view count incremented');
+      res.status(200).json('view count incremented');
     } else {
       res.status(200).json('Already viewed by this user');
     }
