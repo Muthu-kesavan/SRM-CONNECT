@@ -1,5 +1,6 @@
 import React from 'react'
 import Send from '@mui/icons-material/SendOutlined';
+import TimelinePost from '../TimelinePost/TimelinePost';
 const MainTweet = () => {
   return (
     <div>
@@ -15,7 +16,7 @@ const MainTweet = () => {
           <Send color="primary"/>
         </button>
         </form>  
-        tweet
+        <TimelinePost />
     </div>
   )
 }

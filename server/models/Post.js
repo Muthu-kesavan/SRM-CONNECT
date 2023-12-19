@@ -13,8 +13,7 @@ const PostSchema = new mongoose.Schema(
           max: 350,
       },
       likes: {
-          type:[mongoose.Schema.Types.ObjectId],
-          ref: "User",
+          type: Array,
           defaultValue: [],
       },
       /*views: {

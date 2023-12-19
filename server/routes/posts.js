@@ -14,10 +14,10 @@ router.put('/:id/like', likeOrDislike);
 
 router.put('/reply/:id', replyToPost);
 
-router.get('/choice/:id', getAllPosts);
+router.get('/timeline/:id', getAllPosts);
 
-router.get('/yourpost/:id', getUserPosts);
+router.get('/user/all/:id', getUserPosts);
 
-router.get('/feed', getFeed);
+router.get('/explore', getFeed);
 
 export default router;
