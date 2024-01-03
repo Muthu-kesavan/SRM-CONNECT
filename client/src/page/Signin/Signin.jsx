@@ -49,9 +49,11 @@ const Signin = () => {
      onClick={handleLogin}>
        Log in
      </button>
-     <span className="apply text-[#5FBDFF] uppercase">Don't have an account ? 🥲
-      <Link to="/signup" className="apply text-[#5FBDFF] uppercase hover:text-[#2196F3]"> Create One</Link>
+     <span className="apply text-center uppercase text-[#5FBDFF]">Don't have an account ? 🥲
      </span>
+     <span className='text-right'>
+      <Link to="/signup" className="apply uppercase text-[#5FBDFF] hover:text-[#2196F3]"> Create One &gt;</Link>
+      </span>
     </form>
     </div>
   )
