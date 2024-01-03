@@ -3,7 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { loginStart, loginSuccess, loginFailed } from '../../redux/userSlice';
-
+import { ToastContainer, toast} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 const Signin = () => {
   const [register_no, setRegister_no] = useState("");
   const [password, setPassword] = useState("");
@@ -15,14 +16,21 @@ const Signin = () => {
     try{
       const res = await axios.post("auth/signin", { register_no, password });
       dispatch(loginSuccess(res.data));
-      navigate("/");
+      const {username} = res.data;
+      toast.success(`Welcome back ${username}`);
+      setTimeout(() => {
+        navigate("/");
+      }, 1000);
     } catch (err){
       dispatch(loginFailed());
+      toast.error("Incorrect Credentials")
       console.log(err);
     }
   };
   return (
-    <form className="bg-gray-50 flex flex-col py-12 px-8 rounded-lg w-8/12 md:w-6/12 mx-auto gap-10">
+  <div>
+    <ToastContainer />
+    <form className="bg-gray-100 flex flex-col py-12 px-8 rounded-lg w-8/12 md:w-6/12 mx-auto gap-10">
      <h2 className="text-3xl font-bold text-center text-[#5FBDFF] ">LOG IN</h2>
 
      <input
@@ -37,7 +45,7 @@ const Signin = () => {
      placeholder="Password"
      className="bg-transparent text w-full text-base p-4 rounded-[0.4rem] border-[0.1rem] border-solid focus:border-[0.1rem] focus:border-solid focus:border-[#2196f3]"
      />
-     <button className="bg-[#5FBDFF] text-[white] font-[bold] cursor-pointer text-base uppercase px-8 py-4 rounded-[0.4rem] border-[none] hover:bg-[#2196f3]"
+     <button className="bg-[#5FBDFF] text-[white] font-[bold] cursor-pointer text-base uppercase px-8 py-4 rounded-[0.4rem] border-[none] hover:bg-[#2196F3] rounded md"
      onClick={handleLogin}>
        Log in
      </button>
@@ -45,6 +53,7 @@ const Signin = () => {
       <Link to="/signup" className="apply text-[#5FBDFF] uppercase hover:text-[#2196F3]"> Create One</Link>
      </span>
     </form>
+    </div>
   )
 }
 
