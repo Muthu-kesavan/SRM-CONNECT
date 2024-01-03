@@ -21,7 +21,7 @@ export default function Error() {
               404
             </Typography>
             <Typography variant="h6">
-              The page you’re looking for doesn’t exist.
+              Sorry, We Lost the page Your'e looking.
             </Typography>
             <Link to="/signin">
             <Button variant="contained">Back to Login</Button>

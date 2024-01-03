@@ -2,6 +2,15 @@ import Post from '../models/Post.js';
 import { handleError } from '../error.js';
 import User from '../models/User.js';
 
+
+export const getObjectVValue = (data) => {
+  if (data.hasOwnProperty('__v')) {
+    return data['__v'];
+  }
+  return null; // Or handle the case where __v doesn't exist in the object
+};
+
+
 export const createPost = async (req, res, next) => {
     const newPost = new Post(req.body);
     try{
@@ -44,6 +53,7 @@ export const likeOrDislike = async (req, res, next) => {
     }
   };
 
+
   export const getAllPosts = async (req, res, next) => {
     try {
       const currentUser = await User.findById(req.params.id);
@@ -54,12 +64,19 @@ export const likeOrDislike = async (req, res, next) => {
         })
       );
   
-      res.status(200).json(userPosts.concat(...followersPosts));
+      const allPosts = userPosts.concat(...followersPosts);
+      const updatedPosts = allPosts.map((post) => ({
+        ...post._doc,
+        views: post.__v // Display __v as views
+      }));
+  
+      res.status(200).json(updatedPosts);
     } catch (err) {
       handleError(500, err);
     }
   };
 
+  
 export const getUserPosts = async(req, res, next)=>{
   try{
     const userPosts = await Post.find({ userId: req.params.id}).sort({
@@ -84,7 +101,7 @@ export const getFeed = async (req, res, next) => {
 };
 
 
-export const incrementUniquePostViews = async (req, res, next) => {
+export const Views = async (req, res, next) => {
   try {
     const postId = req.params.id;
     const userId = req.body.userId; 
@@ -127,9 +144,25 @@ export const replyToPost = async (req,res)=> {
 
 		post.replies.push(reply);
 		await post.save();
+    const updatedPost = await Post.findById(postId);
+    
 
 		res.status(200).json(reply);
 	} catch (err) {
 		res.status(500).json({ error: err.message });
   }
 }
+
+export const getCommentsByPost = async (req, res)=> {
+  try{
+    const postId = req.params.id;
+    const post = await Post.findById(postId).populate("replies.userId","username profileProfile");
+    if (!post) {
+      return res.status(404).json("Post not found")
+    }
+    const comments = post.replies;
+    res.status(200).json({comments});
+  } catch (err){
+    handleError(500, err);
+  }
+};

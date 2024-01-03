@@ -16,11 +16,10 @@ const PostSchema = new mongoose.Schema(
           type: Array,
           defaultValue: [],
       },
-      /*views: {
-        type:[mongoose.Schema.Types.ObjectId],
-        ref: "User",
+      views: {
+        type: Array,
         defaultValue: [],
-      },*/
+      },
       replies: [
         {
             userId: {
