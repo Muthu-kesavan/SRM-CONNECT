@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  font-family: 'Oxanium', sans-serif;
+  font-family: 'Rubik Scribble', system-ui;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -9,3 +9,4 @@ code {
   font-family: 'Roboto', sans-serif;
   font-family: 'Sono', monospace;
 }
+

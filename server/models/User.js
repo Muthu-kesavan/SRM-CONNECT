@@ -27,7 +27,7 @@ const UserSchema = new mongoose.Schema(
             required: true 
             },
         profileProfile:{
-             type: String 
+             type: String, 
             },
         followers:{ 
             type: Array,
@@ -38,8 +38,11 @@ const UserSchema = new mongoose.Schema(
             defaultValue: [] 
         },
         description:{
-            type: String 
-        }
+            type: String,
+        },
+        profilePicture: {
+            type: String,
+        },
      },
         { 
             timestamps: true 

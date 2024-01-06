@@ -3,15 +3,17 @@ import React, { useEffect, useState } from 'react';
 import formatDistance from "date-fns/formatDistance";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { useSelector } from 'react-redux';
+import  Tooltip  from "@mui/material/Tooltip";
 import Favoriteborder from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import Comment from '@mui/icons-material/ChatBubbleOutlineOutlined';
 import ViewIcon from '@mui/icons-material/Visibility';
 import SubmitIcon from "@mui/icons-material/SendOutlined";
 
+
 const Post = ({ post, setData }) => {
   const { currentUser } = useSelector((state) => state.user);
-  const [userData, setUserData] = useState();
+  const [userData, setUserData] = useState(null);
   const [replyText, setReplyText] = useState('');
   const [comments, setComments] = useState([]);
   const [showComments, setShowComments] = useState(false);
@@ -25,7 +27,7 @@ const Post = ({ post, setData }) => {
     const fetchData = async () => {
       try {
         const findUser = await axios.get(`/users/find/${post.userId}`);
-        setUserData(findUser.data);
+        setUserData(findUser.data || {}); // Ensure userData is not null
       } catch (err) {
         console.log("error", err);
       }
@@ -37,7 +39,7 @@ const Post = ({ post, setData }) => {
     const fetchCommentCount = async () => {
       try {
         const response = await axios.get(`/posts/comments/${post._id}`);
-        setCommentCount(response.data.comments.length);
+        setCommentCount(response.data?.comments?.length || 0); // Ensure comment count is properly handled
       } catch (error) {
         console.error("Error fetching comment count:", error);
       }
@@ -49,9 +51,8 @@ const Post = ({ post, setData }) => {
     e.preventDefault();
     try {
       const like = await axios.put(`/posts/${post._id}/like`, {
-        id: currentUser._id,
+        id: currentUser?._id,
       });
-
 
       if (location.includes("profile")) {
         const newData = await axios.get(`posts/user/all${id}`);
@@ -60,7 +61,7 @@ const Post = ({ post, setData }) => {
         const newData = await axios.get(`posts/explore`);
         setData(newData.data);
       } else {
-        const newData = await axios.get(`/posts/timeline/${currentUser._id}`);
+        const newData = await axios.get(`/posts/timeline/${currentUser?._id}`);
         setData(newData.data);
       }
     } catch (err) {
@@ -76,14 +77,11 @@ const Post = ({ post, setData }) => {
     try {
       const response = await axios.put(`/posts/reply/${post._id}`, {
         text: replyText,
-        userId: currentUser._id,
+        userId: currentUser?._id,
       });
 
       const fetchedComments = await axios.get(`/posts/comments/${post._id}`);
-      if (Array.isArray(fetchedComments.data.comments)) {
-        setComments(fetchedComments.data.comments);
-      }
-
+      setComments(fetchedComments.data?.comments || []);
       setReplyText('');
     } catch (err) {
       console.log("Error adding comment:", err);
@@ -94,9 +92,7 @@ const Post = ({ post, setData }) => {
     const fetchComments = async () => {
       try {
         const fetchedComments = await axios.get(`/posts/comments/${post._id}`);
-        if (Array.isArray(fetchedComments.data.comments)) {
-          setComments(fetchedComments.data.comments);
-        }
+        setComments(fetchedComments.data?.comments || []);
       } catch (error) {
         console.error("Error fetching comments:", error);
       }
@@ -110,34 +106,54 @@ const Post = ({ post, setData }) => {
     <div>
       {userData && (
         <>
-          <div className="flex space-x-2">
+          <div className="flex space-x-2 items-center">
+            {userData.profilePicture ? (
+              <img
+                src={userData.profilePicture}
+                alt="Profile Pic"
+                className="w-12 h-12 rounded-full"
+              />
+            ) : (
+              <img
+                src="./DefaultProfilePic.jpg"
+                alt="Default Profile Pic"
+                className="w-12 h-12 rounded-full"
+              />
+            )}
             <Link to={`/profile/${userData._id}`}>
               <h3 className="font-bold">{userData.username}</h3>
             </Link>
             <p> - {dateStr} ago </p>
           </div>
           <p>{post.description}</p>
-          
-          <button onClick={handleLike}>
-            {post.likes.includes(currentUser._id) ? (
-              <FavoriteIcon className=" mr-2 my-2 curosr-pointer hover:scale-125 "></FavoriteIcon>
-            ) : (
-              <Favoriteborder className="mr-2 my-2 curosr-pointer hover:scale-125"></Favoriteborder>
-            )}
-            {post.likes.length}
-          </button>
-
-          <button onClick={handleToggleComments}>
-            <Comment className="ml-5 mr-2 my-5 cursor-pointer hover:scale-125" />
-            {commentCount}
-          </button>
-
+          <Tooltip title="Likes" arrow>
+            <button onClick={handleLike}>
+              {post.likes?.includes(currentUser?._id) ? (
+                <FavoriteIcon className=" mr-2 my-2 curosr-pointer hover:scale-125" />
+              ) : (
+                <Favoriteborder className="mr-2 my-2 curosr-pointer hover:scale-125" />
+              )}
+              {post.likes?.length || 0}
+            </button>
+          </Tooltip>
+          <Tooltip title="Views" arrow>
+            <button>
+              <ViewIcon className="ml-5 mr-2 my-5 hover:scale-125" />
+              {post.__v || 0}
+            </button>
+          </Tooltip>
+          <Tooltip title="Comment" arrow>
+            <button onClick={handleToggleComments}>
+              <Comment className="ml-5 mr-2 my-5 cursor-pointer hover:scale-125" />
+              {commentCount}
+            </button>
+          </Tooltip>
           {showComments && (
             <div>
               {comments && comments.length > 0 ? (
                 comments.map((comment) => (
                   <div key={comment._id}>
-                    <p className="uppercase ">{comment.userId.username}</p>
+                    <p className="font-bold">{comment.userId?.username}</p>
                     <p className="font italic">{comment.text}</p>
                   </div>
                 ))
@@ -157,11 +173,6 @@ const Post = ({ post, setData }) => {
               </div>
             </div>
           )}
-
-          <button>
-            <ViewIcon className="ml-5 mr-2 my-5 hover:scale-125" />
-            {post.__v}
-          </button>
         </>
       )}
     </div>

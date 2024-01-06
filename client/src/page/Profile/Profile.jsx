@@ -2,12 +2,10 @@ import React, { useState, useEffect } from "react";
 import LeftSidebar from "../../components/LeftSidebar/LeftSidebar";
 import RightSidebar from "../../components/RightSidebar/RightSidebar";
 import EditProfile from "../../components/EditProfile/EditProfile";
-
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import Post from "../../components/Post/Post";
-
 import { following } from "../../redux/userSlice";
 
 const Profile = () => {
@@ -22,7 +20,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const userTweets = await axios.get(`/tweets/user/all/${id}`);
+        const userTweets = await axios.get(`/posts/user/all/${id}`);
         const userProfile = await axios.get(`/users/find/${id}`);
 
         setUserTweets(userTweets.data);
@@ -39,7 +37,7 @@ const Profile = () => {
     if (!currentUser.following.includes(id)) {
       try {
         const follow = await axios.put(`/users/follow/${id}`, {
-          id: currentUser._id,
+          id: currentUser?._id, 
         });
         dispatch(following(id));
       } catch (err) {
@@ -48,7 +46,7 @@ const Profile = () => {
     } else {
       try {
         const unfollow = await axios.put(`/users/unfollow/${id}`, {
-          id: currentUser._id,
+          id: currentUser?._id, 
         });
 
         dispatch(following(id));
@@ -71,14 +69,14 @@ const Profile = () => {
               alt="Profile Picture"
               className="w-12 h-12 rounded-full"
             />
-            {currentUser._id === id ? (
+            {(currentUser && currentUser._id === id) ? (
               <button
                 className="px-4 -y-2 bg-blue-500 rounded-full text-white"
                 onClick={() => setOpen(true)}
               >
                 Edit Profile
               </button>
-            ) : currentUser.following.includes(id) ? (
+            ) : (currentUser && currentUser.following.includes(id)) ? (
               <button
                 className="px-4 -y-2 bg-blue-500 rounded-full text-white"
                 onClick={handleFollow}
@@ -116,4 +114,3 @@ const Profile = () => {
 };
 
 export default Profile;
-

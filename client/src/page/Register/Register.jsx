@@ -45,7 +45,7 @@ const Register = () => {
       toast.success("Account created Successfully");
       setTimeout(()=>{
         navigate("/");
-      },1000);
+      },2000);
     }catch(err){
       dispatch(loginFailed());
       toast.error('Registration failed. Please try again.');

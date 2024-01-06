@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import TimelineTweet from "../TimelinePost/TimelinePost";
+import Tooltip from "@mui/material/Tooltip";
 import Send from '@mui/icons-material/SendOutlined';
 import Camera from '@mui/icons-material/CameraAltOutlined';
 import { useSelector } from "react-redux";
@@ -12,6 +13,11 @@ const MainTweet = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (tweetText.trim() === ""){
+      alert("Please enter the tweet");
+      return;
+    }
     try {
       const submitTweet = await axios.post("/posts", {
         userId: currentUser._id,
@@ -37,14 +43,18 @@ const MainTweet = () => {
           maxLength={280}
           className="bg-slate-200 rounded-lg w-full p-2"
         ></textarea>
+        <Tooltip title="Send" arrow>
         <button 
         onClick={handleSubmit}
         className="py-2 px-4 rounded-full ml-auto">
           <Send color="primary"/>
         </button>
+        </Tooltip>
+        <Tooltip title="camera" arrow>
         <button className="py-2 px-4 rounded-full ml-auto">
          <Camera color="primary"/>
         </button>
+        </Tooltip>
       </form>
       <TimelineTweet />
     </div>

@@ -17,13 +17,13 @@ const Signin = () => {
       const res = await axios.post("auth/signin", { register_no, password });
       dispatch(loginSuccess(res.data));
       const {username} = res.data;
-      toast.success(`Welcome back ${username}`);
+      toast.success(`Welcome back ${username.toUpperCase()}`);
       setTimeout(() => {
         navigate("/");
-      }, 1000);
+      }, 2000);
     } catch (err){
       dispatch(loginFailed());
-      toast.error("Incorrect Credentials")
+      toast.error("Wrong Credentials");
       console.log(err);
     }
   };
