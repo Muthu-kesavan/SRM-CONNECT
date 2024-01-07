@@ -2,14 +2,17 @@ import React, { useState } from "react";
 import TimelineTweet from "../TimelinePost/TimelinePost";
 import Tooltip from "@mui/material/Tooltip";
 import Send from '@mui/icons-material/SendOutlined';
-import Camera from '@mui/icons-material/CameraAltOutlined';
 import { useSelector } from "react-redux";
 import axios from "axios";
 
 const MainTweet = () => {
   const [tweetText, setTweetText] = useState("");
-
   const { currentUser } = useSelector((state) => state.user);
+
+  const playNotificationSound = () => {
+    const audio = new Audio('https://firebasestorage.googleapis.com/v0/b/srm-connect-007.appspot.com/o/sound.mp3?alt=media&token=00e21921-eada-4704-ba0d-e68d94c49c03'); 
+    audio.play();
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,6 +26,8 @@ const MainTweet = () => {
         userId: currentUser._id,
         description: tweetText,
       });
+      playNotificationSound();
+
       window.location.reload(false);
     } catch (err) {
       console.log(err);
@@ -48,11 +53,6 @@ const MainTweet = () => {
         onClick={handleSubmit}
         className="py-2 px-4 rounded-full ml-auto">
           <Send color="primary"/>
-        </button>
-        </Tooltip>
-        <Tooltip title="camera" arrow>
-        <button className="py-2 px-4 rounded-full ml-auto">
-         <Camera color="primary"/>
         </button>
         </Tooltip>
       </form>

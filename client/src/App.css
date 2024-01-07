@@ -3,4 +3,23 @@
 @tailwind components;
 @tailwind utilities;
 
+body::-webkit-scrollbar {
+  width: 0.4rem;
+}
 
+body::-webkit-scrollbar-track {
+  border-radius: 2px;
+  background: lightgray;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: #5FBDFF;
+  border-radius: 5px;
+}
+
+@supports (scrollbar-color: blue green) {
+  * {
+    scrollbar-color: #5FBDFF ;
+    scrollbar-width: thin;
+  }
+}

@@ -1,12 +1,16 @@
+
+  @import url('https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap');
+
+
 body {
   margin: 0;
-  font-family: 'Rubik Scribble', system-ui;
+  font-family: 'Bree Serif', serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
   
 code {
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Bree Serif', serif;
   font-family: 'Sono', monospace;
 }
 

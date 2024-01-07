@@ -10,15 +10,14 @@ export const getObjectVValue = (data) => {
   return null; // Or handle the case where __v doesn't exist in the object
 };
 
-
 export const createPost = async (req, res, next) => {
-    const newPost = new Post(req.body);
-    try{
-        const savedPost  = await newPost.save();
-        res.status(200).json(savedPost);
-    }catch(err){
-        handleError(500, err);
-      }
+  const newPost = new Post(req.body);
+  try{
+      const savedPost  = await newPost.save();
+      res.status(200).json(savedPost);
+  }catch(err){
+      handleError(500, err);
+    }
 
 };
 

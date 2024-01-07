@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import {useLocation, useParams} from "react-router-dom";
 import axios from "axios";
+
 const Placeholder = ({setUserData, userData}) => {
   const { id } = useParams();
   const location = useLocation().pathname;
@@ -17,12 +18,22 @@ const Placeholder = ({setUserData, userData}) => {
   }, [id]);
   return( 
   <div>
+    {userData?.profilePicture && (
+        <img
+          src={userData.profilePicture}
+          alt="Profile"
+          style={{ width: '50px', height: '50px', borderRadius: '50%' }}
+        />
+      )}
     {userData?.username}
     {userData && (
       <div>
-        <p style={{ fontSize:"14px"}}>
+        <p style={{ fontSize:"14px", cursor: 'pointer'}}>
           <div>
             Student of SRM University @ {userData.campus} campus 🎓
+          </div>
+          <div> 📧
+        <a href={`mailto:${userData.email}`}>{userData.email}</a>
           </div>
         {userData.followers.length} Followers
         <span style={{margin: '0 10px'}}></span>

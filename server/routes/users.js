@@ -1,5 +1,5 @@
 import express from "express";
-import { getUser, update, deleteUser, follow, unFollow } from "../controllers/user.js";
+import { getUser, update, deleteUser, follow, unFollow, userFollowers, userFollowing} from "../controllers/user.js";
 import { verifyToken } from "../verifyToken.js";
 
 
@@ -14,5 +14,11 @@ router.delete("/:id", verifyToken, deleteUser);
 router.put("/follow/:id", verifyToken, follow);
 
 router.put("/unfollow/:id", verifyToken, unFollow);
+
+router.get("/:id/followers", userFollowers);
+
+router.get("/:id/following",userFollowing);
+
+
 
 export default router;

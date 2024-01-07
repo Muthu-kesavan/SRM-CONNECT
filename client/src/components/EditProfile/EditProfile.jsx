@@ -5,6 +5,8 @@ import axios from "axios";
 import {useDispatch, useSelector } from "react-redux";
 import { useNavigate } from 'react-router-dom';
 import {changeProfile, logout} from "../../redux/userSlice";
+import { ToastContainer, toast} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 const EditProfile = ({ setOpen }) => {
     const { currentUser } = useSelector((state) => state.user);
   
@@ -63,14 +65,18 @@ const EditProfile = ({ setOpen }) => {
     const handleDelete = async () => {
       const deleteProfile = await axios.delete(`/users/${currentUser._id}`);
       dispatch(logout());
-
-      navigate("/signin");
+      toast.info("Account Deleted 😢");
+      setTimeout(() => {
+        navigate("/signin");
+      }, 2000);  
     };
   
     useEffect(() => {
       img && uploadImg(img);
     }, [img]);
   return(
+    <div>
+    <ToastContainer />
    <div className="absolute w-full h-full top-0 left-0 bg-transparent flex items-center justify-center">
     <div className="w-[600px] h-[600px] bg-slate-200 rounded-lg p-8 flex flex-col gap-4 relative">
         <button 
@@ -95,6 +101,7 @@ const EditProfile = ({ setOpen }) => {
     <button className='bg-red-500 text-white py-2 rounded-full' onClick={handleDelete}>
         Delete
     </button>
+    </div>
     </div>
     </div>
   )  

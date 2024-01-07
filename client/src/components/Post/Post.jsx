@@ -115,7 +115,7 @@ const Post = ({ post, setData }) => {
               />
             ) : (
               <img
-                src="./DefaultProfilePic.jpg"
+                src="https://firebasestorage.googleapis.com/v0/b/srm-connect-007.appspot.com/o/DefaultProfilePic.jpg?alt=media&token=27177761-1d4e-4490-9809-bcb5556c80d4"
                 alt="Default Profile Pic"
                 className="w-12 h-12 rounded-full"
               />
@@ -139,7 +139,7 @@ const Post = ({ post, setData }) => {
           <Tooltip title="Views" arrow>
             <button>
               <ViewIcon className="ml-5 mr-2 my-5 hover:scale-125" />
-              {post.__v || 0}
+              {post.__v || 1}
             </button>
           </Tooltip>
           <Tooltip title="Comment" arrow>

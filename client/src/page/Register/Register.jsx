@@ -92,13 +92,17 @@ const Register = () => {
         name="campus"
         required
         className='bg-transparent text w-full text-base p-4 rounded-[0.4rem] border-[0.1rem] border-solid focus:border-[0.1rem] focus:border-solid focus:border-[#2196f3]'
+        
+        
       >
         <option value="">Your Campus</option> 
         <option value="KTR">KTR</option>
         <option value="RMP">RMP</option>
         <option value="VDP">VDP</option>
         <option value="NCR">NCR</option>
-      </select>
+        
+      </ select>
+      
 
      <input
      onChange={handleInputChange}

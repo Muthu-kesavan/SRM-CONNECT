@@ -84,3 +84,26 @@ export const unFollow = async(req, res, next) => {
     next(err);
   }
 };
+
+export const userFollowers = async (req, res)=>{
+  try{
+    const userfollowers = await User.findById(req.params.id).populate('followers', 'username');
+    res.status(200).json(userfollowers.followers);
+  } catch(err){
+    res.status(500).json("Error");
+  }
+};
+
+export const userFollowing = async(req, res) => {
+  try{
+    const userfollowing = await User.findById(req.params.id).populate('following','username');
+    const followingUsernames = User.following.map(user => user.username);
+    res.status(200).json(userfollowing.following);
+
+  }catch (err){
+    res.status(500).json("Error");
+
+  }
+};
+
+

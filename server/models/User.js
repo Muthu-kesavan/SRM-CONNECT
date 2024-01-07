@@ -42,6 +42,7 @@ const UserSchema = new mongoose.Schema(
         },
         profilePicture: {
             type: String,
+            default: "https://firebasestorage.googleapis.com/v0/b/srm-connect-007.appspot.com/o/DefaultProfilePic.jpg?alt=media&token=27177761-1d4e-4490-9809-bcb5556c80d4",
         },
      },
         { 
