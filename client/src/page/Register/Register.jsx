@@ -5,6 +5,7 @@ import axios from "axios";
 import { loginFailed, loginStart, loginSuccess } from '../../redux/userSlice';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
 const Register = () => {
   const [formData, setFormData] = useState({
     username: '',
@@ -13,6 +14,7 @@ const Register = () => {
     campus: '',
     password: '',
   });
+  
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -56,6 +58,7 @@ const Register = () => {
   return (
     <div>
     <ToastContainer />
+    
     <form className="bg-gray-100 flex flex-col py-12 px-8 rounded-lg w-8/12 md:w-6/12 mx-auto gap-10">
      <h2 className="text-3xl font-bold text-center text-[#5FBDFF] ">Sign Up</h2>
 

@@ -9,7 +9,7 @@ import Navbar from "./components/Navbar/Navbar.jsx";
 import Error from "./page/Error/Error.jsx";
 const Layout = ()=> {
   return (
-    <div className="md:w-8/12 mx-auto">
+    <div className="md:w-10/12 mx-auto">
       <Navbar />
       <Outlet></Outlet>
     </div>

@@ -9,9 +9,15 @@ const PostSchema = new mongoose.Schema(
       },
       description: {
           type: String,
-          required: true,
           max: 350,
       },
+      picture:{
+        type: String,
+      },
+      video: {
+        type: String,
+      },
+      
       likes: {
           type: Array,
           defaultValue: [],

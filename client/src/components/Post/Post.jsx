@@ -106,19 +106,23 @@ const Post = ({ post, setData }) => {
     <div>
       {userData && (
         <>
-          <div className="flex space-x-2 items-center">
+          <div className="flex space-x-2 items-center ">
             {userData.profilePicture ? (
-              <img
+              <div className="mb-4">
+              <img 
                 src={userData.profilePicture}
                 alt="Profile Pic"
                 className="w-12 h-12 rounded-full"
               />
+              </div>
             ) : (
+              <div className="mb-4">
               <img
                 src="https://firebasestorage.googleapis.com/v0/b/srm-connect-007.appspot.com/o/DefaultProfilePic.jpg?alt=media&token=27177761-1d4e-4490-9809-bcb5556c80d4"
                 alt="Default Profile Pic"
                 className="w-12 h-12 rounded-full"
               />
+            </div>
             )}
             <Link to={`/profile/${userData._id}`}>
               <h3 className="font-bold">{userData.username}</h3>
@@ -126,6 +130,22 @@ const Post = ({ post, setData }) => {
             <p> - {dateStr} ago </p>
           </div>
           <p>{post.description}</p>
+          <div className="flex flex-col items-center">
+          {post.video && (
+            <video
+              controls
+              src={post.video}
+              className="rounded-lg max-w-full my-4"
+            />
+          )}
+          {post.picture && (
+            <img
+              src={post.picture}
+              alt="Post Image"
+              className="rounded-lg max-w-full my-4 object-cover"
+            />
+          )}
+          </div>
           <Tooltip title="Likes" arrow>
             <button onClick={handleLike}>
               {post.likes?.includes(currentUser?._id) ? (

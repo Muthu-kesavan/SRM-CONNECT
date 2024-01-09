@@ -7,19 +7,42 @@ export const getObjectVValue = (data) => {
   if (data.hasOwnProperty('__v')) {
     return data['__v'];
   }
-  return null; // Or handle the case where __v doesn't exist in the object
+  return null; 
 };
+
 
 export const createPost = async (req, res, next) => {
-  const newPost = new Post(req.body);
-  try{
-      const savedPost  = await newPost.save();
-      res.status(200).json(savedPost);
-  }catch(err){
-      handleError(500, err);
+  try {
+    const { description, picture, video } = req.body;
+
+    const userId = req.user.id;
+    let post;
+
+    if (description && picture && video) {
+      // Reject if all three are present
+      return res.status(422).json({ error: "Please add either text, picture, or video" });
+    } else if (description && video) {
+      post = new Post({ userId, description, video });
+    } else if (description && picture) {
+      post = new Post({ userId, description, picture });
+    } else if (description) {
+      post = new Post({ userId, description });
+    } else if (video) {
+      post = new Post({ userId, video });
+    } else if (picture) {
+      post = new Post({ userId, picture });
+    } else {
+      return res.status(422).json({ error: "Please add either text, picture, or video" });
     }
 
+    const savedPost = await post.save();
+
+    res.status(200).json(savedPost);
+  } catch (err) {
+    handleError(500, err, res);
+  }
 };
+
 
 export const deletePost = async (req, res, next) => {
     
@@ -66,7 +89,7 @@ export const likeOrDislike = async (req, res, next) => {
       const allPosts = userPosts.concat(...followersPosts);
       const updatedPosts = allPosts.map((post) => ({
         ...post._doc,
-        views: post.__v // Display __v as views
+        views: post.__v 
       }));
   
       res.status(200).json(updatedPosts);

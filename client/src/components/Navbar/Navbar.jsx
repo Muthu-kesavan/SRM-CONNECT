@@ -32,10 +32,10 @@ const Navbar = () => {
         <Emoji color='primary' />
     </div>
     </div>
-    <div className="px-0 md:px-6 mx-auto">
+    {/*<div className="px-0 md:px-6 mx-auto">
         <SearchIcon className='absolute m-2' color="primary"/>
         <input type="text" placeholder="Let's connect :)" className='bg-blue-100 rounded-full py-2 px-8' />
-    </div>
+            </div>*/}
     </div>
   );
 };

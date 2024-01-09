@@ -97,7 +97,7 @@ const EditProfile = ({ setOpen }) => {
           />
         )}
     
-    <p>Delete Account</p>
+    <p className='text-center'>Delete Account</p>
     <button className='bg-red-500 text-white py-2 rounded-full' onClick={handleDelete}>
         Delete
     </button>
