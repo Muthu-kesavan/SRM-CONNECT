@@ -9,13 +9,9 @@ const Navbar = () => {
   const location = useLocation().pathname;
     return (
     <div className="grid grid-cols-1 md:grid-cols-4 my-5 justify-center">
-    <div className="mx-auto md:mx-0">
-      <img
-        src="/Logo.png"
-        alt="Logo"
-        width={"75px"}
-        className="ml-8"
-      />
+      <div className="px-0 md:px-6 mx-auto">
+        <SearchIcon className='absolute m-2' color="primary"/>
+        <input type="text" placeholder="Search User" className='bg-blue-100 rounded-full py-2 px-8' />
     </div>
 
     <div className="col-span-2 md:border-x-2 md:border-slate-200 md:px-6 my-6 md:my-0">
@@ -32,10 +28,7 @@ const Navbar = () => {
         <Emoji color='primary' />
     </div>
     </div>
-    {/*<div className="px-0 md:px-6 mx-auto">
-        <SearchIcon className='absolute m-2' color="primary"/>
-        <input type="text" placeholder="Let's connect :)" className='bg-blue-100 rounded-full py-2 px-8' />
-            </div>*/}
+    
     </div>
   );
 };

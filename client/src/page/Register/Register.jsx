@@ -14,7 +14,7 @@ const Register = () => {
     campus: '',
     password: '',
   });
-  
+  const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -105,17 +105,35 @@ const Register = () => {
         <option value="NCR">NCR</option>
         
       </ select>
-      
+      <div className="relative">
+          <input
+            onChange={handleInputChange}
+            value={formData.password}
+            name="password"
+            type={showPassword ? 'text' : 'password'} 
+            placeholder="Password"
+            required
+            className="bg-transparent text w-full text-base p-4 rounded-[0.4rem] border-[0.1rem] border-solid focus:border-[0.1rem] focus:border-solid focus:border-[#2196f3]"
+          />
+          <span
+            onClick={() => setShowPassword(!showPassword)} 
+            className="absolute right-4 top-3 cursor-pointer"
+          >
+            
+            {showPassword ? (
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.071 4.929a16 16 0 010 22.142M4.929 19.071a16 16 0 010-22.142M14 10a2 2 0 11-4 0 2 2 0 014 0z" />
+              </svg>
+            ) : (
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 15a7 7 0 01-7-7m14 0a7 7 0 00-7-7m7 7a7 7 0 01-7 7m7 7a7 7 0 00-7-7m11-4a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+            )}
+          </span>
+        </div>
 
-     <input
-     onChange={handleInputChange}
-     value={formData.password}
-     name="password"
-     type="password"
-     placeholder="Password"
-     required
-     className="bg-transparent text w-full text-base p-4 rounded-[0.4rem] border-[0.1rem] border-solid focus:border-[0.1rem] focus:border-solid focus:border-[#2196f3]"
-     />
+
      <button
      onClick={handleSignup}
      className="bg-[#5FBDFF] text-[white] font-[bold] cursor-pointer text-base uppercase px-8 py-4 rounded-[0.4rem] border-[none] hover:bg-[#2196f3]">

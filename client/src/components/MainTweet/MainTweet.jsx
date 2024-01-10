@@ -141,4 +141,3 @@ const MainTweet = () => {
 };
 
 export default MainTweet;
-

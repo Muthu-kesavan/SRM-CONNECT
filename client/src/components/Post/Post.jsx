@@ -135,6 +135,7 @@ const Post = ({ post, setData }) => {
             <video
               controls
               src={post.video}
+              alt="Post Video"
               className="rounded-lg max-w-full my-4"
             />
           )}
@@ -184,7 +185,7 @@ const Post = ({ post, setData }) => {
                 <textarea
                   value={replyText}
                   onChange={(e) => setReplyText(e.target.value)}
-                  className="bg-slate-200 rounded-md flex items-center p-4 focus:outline-none blue-500"
+                  className="bg-slate-200 rounded-lg w-full p-2"
                   placeholder="Comment!"
                 ></textarea>
                 <button onClick={handleAddComment} className="bgpy-2 px-4 rounded-full ml-auto">
