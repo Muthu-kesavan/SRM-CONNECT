@@ -1,5 +1,5 @@
 import express from "express";
-import { getUser, update, deleteUser, follow, unFollow, userFollowers, userFollowing} from "../controllers/user.js";
+import { getUser, update, deleteUser, follow, unFollow, userFollowers, userFollowing, searchUsers} from "../controllers/user.js";
 import { verifyToken } from "../verifyToken.js";
 
 
@@ -19,6 +19,6 @@ router.get("/:id/followers", userFollowers);
 
 router.get("/:id/following",userFollowing);
 
-
+router.get("/search/:query", verifyToken, searchUsers);
 
 export default router;

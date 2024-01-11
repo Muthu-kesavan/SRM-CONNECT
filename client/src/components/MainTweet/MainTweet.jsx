@@ -10,7 +10,8 @@ import app from "../../firebase";
 
 const MainTweet = () => {
   const [tweetText, setTweetText] = useState("");
-  const [picture, setPicture] = useState(null); 
+  const [picture, setPicture] = useState(null);
+  const [pictureInfo, setPictureInfo] = useState(""); 
   const { currentUser } = useSelector((state) => state.user);
 
   const playNotificationSound = () => {
@@ -20,6 +21,7 @@ const MainTweet = () => {
 
   const handlePictureChange = (e) => {
     setPicture(e.target.files[0]);
+    setPictureInfo("Picture chosen hit the send button");
   };
 
   const uploadImg = (file) => {
@@ -105,7 +107,8 @@ const MainTweet = () => {
           value={tweetText}
           placeholder="What's happening"
           maxLength={280}
-          className="bg-slate-200 rounded-lg w-full p-2"
+          className="bg-blue-100 rounded-lg w-full p-2 focus:outline-none focus:ring focus:border-blue-400"
+        
         ></textarea>
         <input
           type="file"
@@ -115,6 +118,9 @@ const MainTweet = () => {
           className="hidden"
 
         />
+        {pictureInfo && (
+          <p className="text-blue-400">{pictureInfo}</p>
+        )}
         <Tooltip title="Picture" arrow>
           <button
             type="button"

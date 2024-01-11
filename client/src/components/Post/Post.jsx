@@ -9,7 +9,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import Comment from '@mui/icons-material/ChatBubbleOutlineOutlined';
 import ViewIcon from '@mui/icons-material/Visibility';
 import SubmitIcon from "@mui/icons-material/SendOutlined";
-
+import ProfileModal from "../ProfileModal/ProfileModal";
 
 const Post = ({ post, setData }) => {
   const { currentUser } = useSelector((state) => state.user);
@@ -18,7 +18,7 @@ const Post = ({ post, setData }) => {
   const [comments, setComments] = useState([]);
   const [showComments, setShowComments] = useState(false);
   const [commentCount, setCommentCount] = useState(0);
-
+  const [showProfileModal, setShowProfileModal] = useState(false);
   const dateStr = formatDistance(new Date(post.createdAt), new Date());
   const location = useLocation().pathname;
   const { id } = useParams();
@@ -102,28 +102,37 @@ const Post = ({ post, setData }) => {
     }
   }, [post._id, showComments]);
 
+  const handleProfileClick = () => {
+    setShowProfileModal(true);
+  };
+
+  const handleCloseProfileModal = () => {
+    setShowProfileModal(false);
+  };
   return (
     <div>
       {userData && (
         <>
-          <div className="flex space-x-2 items-center ">
-            {userData.profilePicture ? (
-              <div className="mb-4">
-              <img 
-                src={userData.profilePicture}
-                alt="Profile Pic"
-                className="w-12 h-12 rounded-full"
-              />
-              </div>
-            ) : (
-              <div className="mb-4">
-              <img
-                src="https://firebasestorage.googleapis.com/v0/b/srm-connect-007.appspot.com/o/DefaultProfilePic.jpg?alt=media&token=27177761-1d4e-4490-9809-bcb5556c80d4"
-                alt="Default Profile Pic"
-                className="w-12 h-12 rounded-full"
-              />
+          <div className="flex space-x-2 items-center">
+            <div className="mb-0 cursor-pointer" onClick={handleProfileClick}>
+              {userData.profilePicture ? (
+                <div className="mb-4">
+                  <img 
+                    src={userData.profilePicture}
+                    alt="Profile Pic"
+                    className="w-12 h-12 rounded-full"
+                  />
+                </div>
+              ) : (
+                <div className="mb-4">
+                  <img
+                    src="https://firebasestorage.googleapis.com/v0/b/srm-connect-007.appspot.com/o/DefaultProfilePic.jpg?alt=media&token=27177761-1d4e-4490-9809-bcb5556c80d4"
+                    alt="Default Profile Pic"
+                    className="w-12 h-12 rounded-full"
+                  />
+                </div>
+              )}
             </div>
-            )}
             <Link to={`/profile/${userData._id}`}>
               <h3 className="font-bold">{userData.username}</h3>
             </Link>
@@ -131,28 +140,28 @@ const Post = ({ post, setData }) => {
           </div>
           <p>{post.description}</p>
           <div className="flex flex-col items-center">
-          {post.video && (
-            <video
-              controls
-              src={post.video}
-              alt="Post Video"
-              className="rounded-lg max-w-full my-4"
-            />
-          )}
-          {post.picture && (
-            <img
-              src={post.picture}
-              alt="Post Image"
-              className="rounded-lg max-w-full my-4 object-cover"
-            />
-          )}
+            {post.video && (
+              <video
+                controls
+                src={post.video}
+                alt="Post Video"
+                className="rounded-lg max-w-full my-4"
+              />
+            )}
+            {post.picture && (
+              <img
+                src={post.picture}
+                alt="Post Image"
+                className="rounded-lg max-w-full my-4 object-cover"
+              />
+            )}
           </div>
           <Tooltip title="Likes" arrow>
             <button onClick={handleLike}>
               {post.likes?.includes(currentUser?._id) ? (
-                <FavoriteIcon className=" mr-2 my-2 curosr-pointer hover:scale-125" />
+                <FavoriteIcon className="mr-2 my-2 cursor-pointer hover:scale-125" />
               ) : (
-                <Favoriteborder className="mr-2 my-2 curosr-pointer hover:scale-125" />
+                <Favoriteborder className="mr-2 my-2 cursor-pointer hover:scale-125" />
               )}
               {post.likes?.length || 0}
             </button>
@@ -194,10 +203,15 @@ const Post = ({ post, setData }) => {
               </div>
             </div>
           )}
+          {showProfileModal && (
+            <ProfileModal userData={userData} onClose={handleCloseProfileModal} />
+          )}
         </>
       )}
     </div>
   );
+  
+
 };
 
 export default Post;

@@ -94,16 +94,32 @@ export const userFollowers = async (req, res)=>{
   }
 };
 
-export const userFollowing = async(req, res) => {
-  try{
-    const userfollowing = await User.findById(req.params.id).populate('following','username');
-    const followingUsernames = User.following.map(user => user.username);
-    res.status(200).json(userfollowing.following);
 
-  }catch (err){
-    res.status(500).json("Error");
-
+export const userFollowing = async (req, res) => {
+  try {
+    const userfollowing = await User.findById(req.params.id).populate('following', 'username');
+    res.status(200).json(userfollowing.followers);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json("error");
   }
 };
 
 
+export const searchUsers = async (req, res, next) => {
+  try {
+    const query = req.params.query;
+
+    // You can customize the search logic based on your needs
+    const users = await User.find({
+      $or: [
+        { username: { $regex: query, $options: "i" } },
+        { email: { $regex: query, $options: "i" } },
+      ],
+    }).select("username profilePicture");
+
+    res.status(200).json(users);
+  } catch (err) {
+    next(err);
+  }
+};

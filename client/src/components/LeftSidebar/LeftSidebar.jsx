@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import SearchIcon from "@mui/icons-material/Search";
 import HomeIcon from '@mui/icons-material/HomeOutlined';
 import ExploreIcon from '@mui/icons-material/ExploreOutlined';
 import PersonIcon from '@mui/icons-material/InsertEmoticonOutlined';
@@ -9,6 +10,7 @@ import { Tooltip } from '@mui/material';
 const LeftSidebar = () => {
   const { currentUser } = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  
 
   const handleLogout = () => {
     dispatch(logout());
@@ -16,7 +18,13 @@ const LeftSidebar = () => {
 
   return (
     <div className="flex flex-col h-full md:h-[90vh] justify-between mr-6">
-      <div className="mt-6 flex flex-col space-y-4">
+      <div className="mt-6 flex flex-col space-y-4 relative">
+          <SearchIcon className="absolute m-6" color="primary" />
+        <input
+          type="text"
+          placeholder="    Search User"
+          className="bg-blue-100 rounded-full py-2 px-8 focus:outline-none focus:ring focus:border-blue-400"
+        />
         <Link to="/">
           <div className="flex items-center space-x-6 px-2 py-2 hover:bg-slate-200 rounded-full cursor-pointer">
             <HomeIcon fontSize="large" color="primary" />
@@ -29,7 +37,7 @@ const LeftSidebar = () => {
             <p>Explore</p>
           </div>
         </Link>
-        {currentUser?._id && ( 
+        {currentUser?._id && (
           <Link to={`/profile/${currentUser._id}`}>
             <div className="flex items-center space-x-6 px-2 py-2 hover:bg-slate-200 rounded-full cursor-pointer">
               <PersonIcon fontSize="large" color="primary" />
@@ -38,11 +46,11 @@ const LeftSidebar = () => {
           </Link>
         )}
         <div className="flex items-center space-x-2 px-2 py-2 cursor-pointer">
-          {currentUser && ( 
+          {currentUser && (
             <div>
               <p className="font-bold">{currentUser.username}</p>
               <Tooltip title="Campus" arrow>
-              <p className="font italic"> @{currentUser.campus}</p>
+                <p className="font italic"> @{currentUser.campus}</p>
               </Tooltip>
             </div>
           )}
@@ -60,6 +68,7 @@ const LeftSidebar = () => {
       </div>
     </div>
   );
+  
 };
 
 export default LeftSidebar;
