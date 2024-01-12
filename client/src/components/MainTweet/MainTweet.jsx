@@ -21,7 +21,7 @@ const MainTweet = () => {
 
   const handlePictureChange = (e) => {
     setPicture(e.target.files[0]);
-    setPictureInfo("Picture chosen hit the send button");
+    setPictureInfo("Got Ur Picture hit send button");
   };
 
   const uploadImg = (file) => {
