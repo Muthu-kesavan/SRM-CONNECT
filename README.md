@@ -42,9 +42,9 @@ npm start
 
 ## 🖼️ Screenshot
 **Sign-up Page**
-![signup](https://github.com/Muthu-kesavan/SRM-CONNECT/assets/73815261/885ec44e-0d08-424e-9422-53f5867140c9)
+![Screenshot 2024-01-16 114608](https://github.com/Muthu-kesavan/SRM-CONNECT/assets/73815261/2931f77a-7e6e-4ac6-9765-d0481890254d)
 **Login Page**
-![Login](https://github.com/Muthu-kesavan/SRM-CONNECT/assets/73815261/12ef088a-e0df-4158-9795-c1f28ebdbb4a)
+![Screenshot 2024-01-16 114542](https://github.com/Muthu-kesavan/SRM-CONNECT/assets/73815261/f27af43b-d700-4b7d-8185-c708ed561b6e)
 **Home Page**
 ![home](https://github.com/Muthu-kesavan/SRM-CONNECT/assets/73815261/a41183d3-5ab8-4441-8b34-711d61e811c4)
 **Explore Page**
