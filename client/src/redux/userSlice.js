@@ -4,6 +4,7 @@ const initialState = {
     currentUser: null,
     isLoading: false,
     error: false,
+    notifications: [],
 };
 
 export const userSlice = createSlice({
@@ -25,7 +26,10 @@ export const userSlice = createSlice({
             return initialState;
         },
         changeProfile: (state, action) => {
-            state.currentUser.profilePicture = action.payload;
+          state.currentUser = {
+            ...state.currentUser,
+            profilePicture: action.payload,
+          };
     },
     following: (state, action) => {
         if (state.currentUser.following.includes(action.payload)) {
@@ -38,8 +42,14 @@ export const userSlice = createSlice({
           state.currentUser.following.push(action.payload);
         }
       },
+      addNotification: (state, action) => {
+        state.notifications.push(action.payload);
+      },
+      clearNotifications: (state) => {
+        state.notifications = [];
+      },
     },
 });
 
-export const { loginStart, loginSuccess, loginFailed, changeProfile, logout, following } = userSlice.actions;
+export const { loginStart, loginSuccess, loginFailed, changeProfile, logout, following, addNotification, clearNotifications } = userSlice.actions;
 export default userSlice.reducer;

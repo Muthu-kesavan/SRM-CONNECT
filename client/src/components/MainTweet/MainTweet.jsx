@@ -7,11 +7,12 @@ import axios from "axios";
 import AddAPhotoRoundedIcon from '@mui/icons-material/AddAPhotoRounded';
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import app from "../../firebase";
+import Linkify from 'react-linkify';
 
 const MainTweet = () => {
   const [tweetText, setTweetText] = useState("");
   const [picture, setPicture] = useState(null);
-  const [pictureInfo, setPictureInfo] = useState(""); 
+  const [pictureInfo, setPictureInfo] = useState("");
   const { currentUser } = useSelector((state) => state.user);
 
   const playNotificationSound = () => {
@@ -24,68 +25,53 @@ const MainTweet = () => {
     setPictureInfo("Got Ur Picture hit send button");
   };
 
-  const uploadImg = (file) => {
+  const uploadImg = async (file) => {
     const storage = getStorage(app);
     const fileName = new Date().getTime() + file.name;
     const storageRef = ref(storage, fileName);
     const uploadTask = uploadBytesResumable(storageRef, file);
 
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {},
-      (error) => {
-        console.error(error);
-      },
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
-          try {
-            const submitTweet = await axios.post("/posts", {
-              userId: currentUser._id,
-              description: tweetText,
-              picture: downloadURL,
-            });
+    try {
+      await uploadTask;
 
-            console.log(submitTweet);
-          } catch (err) {
-            console.log(err);
-          }
-        });
-      }
-    );
+      const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+
+      const submitTweet = await axios.post("/posts", {
+        userId: currentUser._id,
+        description: tweetText,
+        picture: downloadURL,
+      });
+
+      console.log(submitTweet);
+    } catch (error) {
+      console.error("Error uploading image:", error);
+    }
   };
 
   const handleIconClick = () => {
     document.getElementById('pictureInput').click();
-  }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     if (!tweetText.trim() && !picture) {
       alert("Please enter the tweet text or upload a picture");
       return;
     }
-  
+
     try {
-      let downloadURL = '';
       if (picture) {
-        const storage = getStorage(app);
-        const fileName = new Date().getTime() + picture.name;
-        const storageRef = ref(storage, fileName);
-        const uploadTask = uploadBytesResumable(storageRef, picture);
-  
-        await uploadTask;
-  
-        downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+        await uploadImg(picture);
+      } else {
+        const submitTweet = await axios.post("/posts", {
+          userId: currentUser._id,
+          description: tweetText,
+        });
+
+        console.log(submitTweet);
       }
-  
-      const submitTweet = await axios.post("/posts", {
-        userId: currentUser._id,
-        description: tweetText,
-        picture: downloadURL || '', 
-      });
-  
-      console.log(submitTweet);
-  
+
       playNotificationSound();
       setPicture(null);
       setTweetText("");
@@ -102,21 +88,21 @@ const MainTweet = () => {
       )}
 
       <form className="border-b-2 pb-6">
-        <textarea
-          onChange={(e) => setTweetText(e.target.value)}
-          value={tweetText}
-          placeholder="What's happening"
-          maxLength={280}
-          className="bg-blue-100 rounded-lg w-full p-2 focus:outline-none focus:ring focus:border-blue-400"
-        
-        ></textarea>
+        <Linkify>
+          <textarea
+            onChange={(e) => setTweetText(e.target.value)}
+            value={tweetText}
+            placeholder="What's happening"
+            maxLength={280}
+            className="bg-blue-100 rounded-lg w-full p-2 focus:outline-none focus:ring focus:border-blue-400"
+          ></textarea>
+        </Linkify>
         <input
           type="file"
-          id ="pictureInput"
+          id="pictureInput"
           onChange={handlePictureChange}
-          accept= "image/*, video/*"
+          accept="image/*, video/*"
           className="hidden"
-
         />
         {pictureInfo && (
           <p className="text-blue-400">{pictureInfo}</p>

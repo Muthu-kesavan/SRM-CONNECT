@@ -19,7 +19,6 @@ export const createPost = async (req, res, next) => {
     let post;
 
     if (description && picture && video) {
-      // Reject if all three are present
       return res.status(422).json({ error: "Please add either text, picture, or video" });
     } else if (description && video) {
       post = new Post({ userId, description, video });

@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import { useDispatch } from "react-redux";
 import axios from "axios";
 import { loginFailed, loginStart, loginSuccess } from '../../redux/userSlice';
@@ -139,6 +139,7 @@ const Register = () => {
      className="bg-[#5FBDFF] text-[white] font-[bold] cursor-pointer text-base uppercase px-8 py-4 rounded-[0.4rem] border-[none] hover:bg-[#2196f3]">
        Sign up
      </button>
+     <Link to="/signin" className="apply  text-[#5FBDFF] hover:text-[#2196F3] hover:underline">&lt;- Back to Login</Link>
     </form>
     </div>
   )

@@ -26,8 +26,10 @@ const Navbar = () => {
               <Placeholder setUserData={setUserData} userData={userData} />
             ) : location.includes("explore") ? (
               "Explore"
-            ) : (
+            ) : location.includes("home") ? (
               "Home"
+            ): (
+              ""
             )}
           </h2>
         <Emoji color='primary' />

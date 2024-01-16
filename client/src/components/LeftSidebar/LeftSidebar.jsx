@@ -4,6 +4,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import HomeIcon from '@mui/icons-material/HomeOutlined';
 import ExploreIcon from '@mui/icons-material/ExploreOutlined';
 import PersonIcon from '@mui/icons-material/InsertEmoticonOutlined';
+import Notify from '@mui/icons-material/NotificationAddOutlined'
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../redux/userSlice';
 import { Tooltip } from '@mui/material';
@@ -22,7 +23,7 @@ const LeftSidebar = () => {
           <SearchIcon className="absolute m-6" color="primary" />
         <input
           type="text"
-          placeholder="    Search User"
+          placeholder="         Search User"
           className="bg-blue-100 rounded-full py-2 px-8 focus:outline-none focus:ring focus:border-blue-400"
         />
         <Link to="/">
@@ -37,6 +38,12 @@ const LeftSidebar = () => {
             <p>Explore</p>
           </div>
         </Link>
+        <Link to="/notification">
+        <div className="flex items-center space-x-6 px-2 py-2 hover:bg-slate-200 rounded-full cursor-pointer">
+            <Notify fontSize="large" color="primary" />
+            <p>Notification</p>
+          </div>
+          </Link>
         {currentUser?._id && (
           <Link to={`/profile/${currentUser._id}`}>
             <div className="flex items-center space-x-6 px-2 py-2 hover:bg-slate-200 rounded-full cursor-pointer">

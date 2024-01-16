@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from 'react';
+import Linkify from 'react-linkify';
 import formatDistance from "date-fns/formatDistance";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { useSelector } from 'react-redux';
@@ -19,6 +20,7 @@ const Post = ({ post, setData }) => {
   const [showComments, setShowComments] = useState(false);
   const [commentCount, setCommentCount] = useState(0);
   const [showProfileModal, setShowProfileModal] = useState(false);
+  const [enlargePicture, setEnlargePicture] = useState(false);
   const dateStr = formatDistance(new Date(post.createdAt), new Date());
   const location = useLocation().pathname;
   const { id } = useParams();
@@ -109,6 +111,10 @@ const Post = ({ post, setData }) => {
   const handleCloseProfileModal = () => {
     setShowProfileModal(false);
   };
+
+  const handlePictureClick = () => {
+    setEnlargePicture(!enlargePicture);
+  };
   return (
     <div>
       {userData && (
@@ -138,7 +144,9 @@ const Post = ({ post, setData }) => {
             </Link>
             <p> - {dateStr} ago </p>
           </div>
+          <Linkify>
           <p>{post.description}</p>
+          </Linkify>
           <div className="flex flex-col items-center">
             {post.video && (
               <video
@@ -152,7 +160,10 @@ const Post = ({ post, setData }) => {
               <img
                 src={post.picture}
                 alt="Post Image"
-                className="rounded-lg max-w-full my-4 object-cover"
+                className={`rounded-lg max-w-full my-4 cursor-pointer ${
+                  enlargePicture ? 'max-h-screen' : 'h-64'
+                }`}
+                onClick={handlePictureClick}
               />
             )}
           </div>
@@ -206,6 +217,7 @@ const Post = ({ post, setData }) => {
           {showProfileModal && (
             <ProfileModal userData={userData} onClose={handleCloseProfileModal} />
           )}
+          <hr className="my-4 border-t-slate-200 px-6" />
         </>
       )}
     </div>
