@@ -44,13 +44,43 @@ const Register = () => {
     try{
       const res = await axios.post("/auth/signup",{username, email, register_no,campus,password});
       dispatch(loginSuccess(res.data));
-      toast.success("Account created Successfully");
+      toast.success("Account created Successfully", {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 1900,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        style: {
+          background: '#5FBDFF',
+          color: '#ffffff',
+          fontSize: '16px',
+          fontWeight: 'bold',
+          borderRadius: '12px', 
+          fontFamily: 'Bree Serif, serif',
+        },
+      });;
       setTimeout(()=>{
         navigate("/");
       },2000);
     }catch(err){
       dispatch(loginFailed());
-      toast.error('Registration failed. Please try again.');
+      toast.error('Registration failed. Please try again.', {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        style: {
+          background: '#ff6347',
+          color: '#ffffff',
+          fontSize: '16px',
+          fontWeight: 'bold',
+          borderRadius: '12px', 
+          fontFamily: 'Bree Serif, serif',
+        },
+      });
     }
 
   };

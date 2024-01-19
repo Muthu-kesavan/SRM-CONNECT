@@ -4,12 +4,14 @@ import RightSidebar from "../../components/RightSidebar/RightSidebar";
 import EditProfile from "../../components/EditProfile/EditProfile";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { Circles } from "react-loader-spinner";
 import axios from "axios";
 import Post from "../../components/Post/Post";
 import { following } from "../../redux/userSlice";
 
 const Profile = () => {
   const [open, setOpen] = useState(false);
+  const [isLoading, setIsloading] = useState(false);
   const { currentUser } = useSelector((state) => state.user);
   const [userTweets, setUserTweets] = useState(null);
   const [userProfile, setUserProfile] = useState(null);
@@ -19,6 +21,7 @@ const Profile = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      setIsloading(true);
       try {
         const userTweets = await axios.get(`/posts/user/all/${id}`);
         const userProfile = await axios.get(`/users/find/${id}`);
@@ -27,6 +30,8 @@ const Profile = () => {
         setUserProfile(userProfile.data);
       } catch (err) {
         console.log("error", err);
+      } finally {
+        setIsloading(false);
       }
     };
 
@@ -89,6 +94,11 @@ const Profile = () => {
             )}
           </div>
           <div className="mt-6">
+            {isLoading && (
+              <div className="loading-spinner-container">
+              <Circles height={80} width={80} color="#5FBDFF" ariaLabel="circles-loading" visible={true} />
+            </div>
+            )}
             {userTweets &&
               userTweets.map((post) => {
                 return (

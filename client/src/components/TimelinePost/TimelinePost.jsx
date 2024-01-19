@@ -1,22 +1,25 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-
+import {Circles} from "react-loader-spinner";
 import { useSelector } from "react-redux";
 import Post from "../Post/Post";
-
+import "../Loading/Loading.css";
 const TimelinePost = () => {
   const [timeLine, setTimeLine] = useState(null);
-
+  const [isLoading, setIsloading] = useState(false);
   const { currentUser } = useSelector((state) => state.user);
 
   useEffect(() => {
     const fetchData = async () => {
+      setIsloading(true);
       try {
         const timelinePosts = await axios.get(`/posts/timeline/${currentUser._id}`);
 
         setTimeLine(timelinePosts.data);
       } catch (err) {
         console.log("error", err);
+      } finally{
+        setIsloading(false);
       }
     };
 
@@ -26,6 +29,12 @@ const TimelinePost = () => {
   console.log("Timeline", timeLine);
   return (
     <div className="mt-6">
+      {isLoading && (
+        <div className="loading-spinner-container">
+        <Circles height={80} width={80} color="#5FBDFF" ariaLabel="circles-loading" visible={true} />
+      </div>
+
+      )}
       {timeLine &&
         timeLine.map((post) => {
           return (

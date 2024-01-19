@@ -21,13 +21,43 @@ const Signin = () => {
       const res = await axios.post('auth/signin', { register_no, password });
       dispatch(loginSuccess(res.data));
       const { username } = res.data;
-      toast.success(`Welcome back ${username.toUpperCase()}`);
+      toast.success(`Welcome back ${username.toUpperCase()}`, {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 1800,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        style: {
+          background: '#5FBDFF',
+          color: '#ffffff',
+          fontSize: '16px',
+          fontWeight: 'bold',
+          borderRadius: '12px', 
+          fontFamily: 'Bree Serif, serif',
+        },
+      });
       setTimeout(() => {
         navigate('/');
       }, 2000);
     } catch (err) {
       dispatch(loginFailed());
-      toast.error('Wrong Credentials');
+      toast.error('Wrong Credentials', {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        style: {
+          background: '#ff6347',
+          color: '#ffffff',
+          fontSize: '16px',
+          fontWeight: 'bold',
+          borderRadius: '12px', 
+          fontFamily: 'Bree Serif, serif',
+        },
+      });
       console.log(err);
     }
   };
