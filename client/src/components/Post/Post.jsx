@@ -29,7 +29,7 @@ const Post = ({ post, setData }) => {
     const fetchData = async () => {
       try {
         const findUser = await axios.get(`/users/find/${post.userId}`);
-        setUserData(findUser.data || {}); // Ensure userData is not null
+        setUserData(findUser.data || {}); 
       } catch (err) {
         console.log("error", err);
       }
@@ -41,7 +41,7 @@ const Post = ({ post, setData }) => {
     const fetchCommentCount = async () => {
       try {
         const response = await axios.get(`/posts/comments/${post._id}`);
-        setCommentCount(response.data?.comments?.length || 0); // Ensure comment count is properly handled
+        setCommentCount(response.data?.comments?.length || 0); 
       } catch (error) {
         console.error("Error fetching comment count:", error);
       }

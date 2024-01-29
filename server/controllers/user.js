@@ -98,7 +98,7 @@ export const userFollowers = async (req, res)=>{
 export const userFollowing = async (req, res) => {
   try {
     const userfollowing = await User.findById(req.params.id).populate('following', 'username');
-    res.status(200).json(userfollowing.followers);
+    res.status(200).json(userfollowing.following);
   } catch (err) {
     console.error(err);
     res.status(500).json("error");
@@ -109,8 +109,6 @@ export const userFollowing = async (req, res) => {
 export const searchUsers = async (req, res, next) => {
   try {
     const query = req.params.query;
-
-    // You can customize the search logic based on your needs
     const users = await User.find({
       $or: [
         { username: { $regex: query, $options: "i" } },

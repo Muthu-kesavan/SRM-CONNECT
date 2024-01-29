@@ -25,14 +25,15 @@ const Navbar = () => {
         {location.includes("profile") ? (
               <Placeholder setUserData={setUserData} userData={userData} />
             ) : location.includes("explore") ? (
-              "Explore"
-            ) : location.includes("home") ? (
-              "Home"
-            ): (
+              "EXPLORE"
+            ) : location.includes("signin") ? (
               ""
+            ) :  location.includes("signup") ? (
+              ""
+            ) : (
+              "HOME"
             )}
           </h2>
-        <Emoji color='primary' />
     </div>
     </div>
     </div>
