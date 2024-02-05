@@ -8,7 +8,7 @@ const Placeholder = ({setUserData, userData}) => {
   useEffect(()=>{
     const fetchData = async()=>{
       try{
-        const userProfile = await axios.get(`/users/find/${id}`);
+        const userProfile = await axios.get(`https://dataflow-412p.onrender.com/users/find/${id}`);
         setUserData(userProfile.data);
       } catch(err){
         console.log("error",err)

@@ -13,7 +13,7 @@ const ExploreTweet = () => {
       setIsloading(true);
 
       try{
-        const exploreTweets = await axios.get("/posts/explore");
+        const exploreTweets = await axios.get("https://dataflow-412p.onrender.com/posts/explore");
         setExplore(exploreTweets.data);
 
       } catch (err){
