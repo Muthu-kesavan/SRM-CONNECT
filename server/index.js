@@ -16,9 +16,10 @@ const corsOptions = {
     "https://srm-connect.netlify.app/profile/:id"
 ]
   }
-  app.use(cors(corsOptions));
+
 const app = express();
 dotenv.config();
+app.use(cors(corsOptions));
 
 const connect =()=>{
     mongoose.set("strictQuery", false);
