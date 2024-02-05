@@ -2,12 +2,21 @@ import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
-
+import cors from "cors";
 import userRoutes from './routes/users.js';
 import authRoutes from './routes/auths.js';
 import postRoutes from './routes/posts.js';
 
-
+const corsOptions = {
+    origin:["https://srm-connect.netlify.app,",
+    "https://srm-connect.netlify.app/",
+    "https://srm-connect.netlify.app/signin/",
+    "https://srm-connect.netlify.app/signup/",
+    "https://srm-connect.netlify.app/explore/",
+    "https://srm-connect.netlify.app/profile/:id"
+]
+  }
+  app.use(cors(corsOptions));
 const app = express();
 dotenv.config();
 
