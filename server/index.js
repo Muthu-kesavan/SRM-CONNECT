@@ -33,9 +33,9 @@ const connect =()=>{
  app.use(cors(corsOptions));
 app.use(cookieParser());
 app.use(express.json());
-app.use('https://dataflow-412p.onrender.com/api/users', userRoutes);
-app.use('https://dataflow-412p.onrender.com/api/auth', authRoutes);
-app.use('https://dataflow-412p.onrender.com/api/posts', postRoutes);
+app.use('https://dataflow-412p.onrender.com/users', userRoutes);
+app.use('https://dataflow-412p.onrender.com/auth', authRoutes);
+app.use('https://dataflow-412p.onrender.com/posts', postRoutes);
 app.listen(8000, ()=>{
     connect();
     console.log("Listening to the port 8000");
