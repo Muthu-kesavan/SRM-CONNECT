@@ -5,9 +5,14 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
+    "install-server": "cd backend && npm install",
+    "start-server": "cd backend && node app.js",
+    "install-client": "cd client && npm install",
+    "build-client": "cd client && npm run build",
+    "start-client": "cd client && npm run start",
     "start": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npm i"
+    "test": "echo \"Error: no test specified\" && exit 1"
+    
   },
   "author": "Muthu kesavan S",
   "license": "ISC",
