@@ -5,20 +5,20 @@ import { verifyToken } from "../verifyToken.js";
 
 const router = express.Router();
 
-router.put("/:id",verifyToken, update);
+router.put("https://dataflow-412p.onrender.com/:id",verifyToken, update);
 
-router.get("/find/:id", getUser);
+router.get("https://dataflow-412p.onrender.com/find/:id", getUser);
 
-router.delete("/:id", verifyToken, deleteUser);
+router.delete("https://dataflow-412p.onrender.com/:id", verifyToken, deleteUser);
 
-router.put("/follow/:id", verifyToken, follow);
+router.put("https://dataflow-412p.onrender.com/follow/:id", verifyToken, follow);
 
-router.put("/unfollow/:id", verifyToken, unFollow);
+router.put("https://dataflow-412p.onrender.com/unfollow/:id", verifyToken, unFollow);
 
-router.get("/:id/followers", userFollowers);
+router.get("https://dataflow-412p.onrender.com/:id/followers", userFollowers);
 
-router.get("/:id/following",userFollowing);
+router.get("https://dataflow-412p.onrender.com/:id/following",userFollowing);
 
-router.get("/search/:query", verifyToken, searchUsers);
+router.get("https://dataflow-412p.onrender.com/search/:query", verifyToken, searchUsers);
 
 export default router;
