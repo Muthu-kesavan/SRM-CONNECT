@@ -13,7 +13,7 @@ const TimelinePost = () => {
     const fetchData = async () => {
       setIsloading(true);
       try {
-        const timelinePosts = await axios.get(`https://dataflow-412p.onrender.com/posts/timeline/${currentUser._id}`);
+        const timelinePosts = await axios.get(`/posts/timeline/${currentUser._id}`);
 
         setTimeLine(timelinePosts.data);
       } catch (err) {

@@ -42,7 +42,7 @@ const Register = () => {
     }
 
     try{
-      const res = await axios.post("https://dataflow-412p.onrender.com/auth/signup",{username, email, register_no,campus,password});
+      const res = await axios.post("/auth/signup",{username, email, register_no,campus,password});
       dispatch(loginSuccess(res.data));
       toast.success("Account created Successfully", {
         position: toast.POSITION.TOP_CENTER,

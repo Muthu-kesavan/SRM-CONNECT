@@ -38,7 +38,7 @@ const LeftSidebar = () => {
           </div>
         </Link>
         {currentUser?._id && (
-          <Link to={`https://dataflow-412p.onrender.com/profile/${currentUser._id}`}>
+          <Link to={`/profile/${currentUser._id}`}>
             <div className="flex items-center space-x-6 px-2 py-2 hover:bg-slate-200 rounded-full cursor-pointer">
               <PersonIcon fontSize="large" color="primary" />
               <p>Profile</p>

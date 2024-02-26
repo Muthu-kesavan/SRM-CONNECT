@@ -4,22 +4,22 @@ import { createPost, deletePost, likeOrDislike, getAllPosts, getUserPosts, getFe
 
 const router = express.Router();
 
-router.post('https://dataflow-412p.onrender.com/', verifyToken, createPost)
+router.post('/', verifyToken, createPost)
 
-router.delete('https://dataflow-412p.onrender.com/:id', verifyToken, deletePost);
+router.delete('/:id', verifyToken, deletePost);
 
-router.put('https://dataflow-412p.onrender.com/:id/like', likeOrDislike);
+router.put('/:id/like', likeOrDislike);
 
-router.put('https://dataflow-412p.onrender.com/:id/view', Views);
+router.put('/:id/view', Views);
 
-router.put('https://dataflow-412p.onrender.com/reply/:id', replyToPost);
+router.put('/reply/:id', replyToPost);
 
-router.get('https://dataflow-412p.onrender.com/timeline/:id', getAllPosts);
+router.get('/timeline/:id', getAllPosts);
 
-router.get('https://dataflow-412p.onrender.com/user/all/:id', getUserPosts);
+router.get('/user/all/:id', getUserPosts);
 
-router.get('https://dataflow-412p.onrender.com/explore', getFeed);
+router.get('/explore', getFeed);
 
-router.get('https://dataflow-412p.onrender.com/comments/:id', getCommentsByPost);
+router.get('/comments/:id', getCommentsByPost);
 
 export default router;

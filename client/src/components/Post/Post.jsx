@@ -139,7 +139,7 @@ const Post = ({ post, setData }) => {
                 </div>
               )}
             </div>
-            <Link to={`https://dataflow-412p.onrender.com/profile/${userData._id}`}>
+            <Link to={`/profile/${userData._id}`}>
               <h3 className="font-bold">{userData.username}</h3>
             </Link>
             <p> - {dateStr} ago </p>

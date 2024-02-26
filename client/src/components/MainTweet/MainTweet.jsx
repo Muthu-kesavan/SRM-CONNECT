@@ -64,7 +64,7 @@ const MainTweet = () => {
       if (picture) {
         await uploadImg(picture);
       } else {
-        const submitTweet = await axios.post("https://dataflow-412p.onrender.com/api/posts/", {
+        const submitTweet = await axios.post("/posts/", {
           userId: currentUser._id,
           description: tweetText,
         });
