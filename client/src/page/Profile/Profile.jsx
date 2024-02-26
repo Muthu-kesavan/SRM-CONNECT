@@ -4,7 +4,7 @@ import RightSidebar from "../../components/RightSidebar/RightSidebar";
 import EditProfile from "../../components/EditProfile/EditProfile";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { Circles } from "react-loader-spinner";
+import { Bars } from "react-loader-spinner";
 import axios from "axios";
 import Post from "../../components/Post/Post";
 import { following } from "../../redux/userSlice";
@@ -96,7 +96,7 @@ const Profile = () => {
           <div className="mt-6">
             {isLoading && (
               <div className="loading-spinner-container">
-              <Circles height={80} width={80} color="#5FBDFF" ariaLabel="circles-loading" visible={true} />
+              <Bars height={80} width={80} color="#5FBDFF" ariaLabel="circles-loading" visible={true} />
             </div>
             )}
             {userTweets &&

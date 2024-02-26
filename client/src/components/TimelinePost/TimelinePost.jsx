@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import {Circles} from "react-loader-spinner";
+import {Bars} from "react-loader-spinner";
 import { useSelector } from "react-redux";
 import Post from "../Post/Post";
 import "../Loading/Loading.css";
@@ -31,7 +31,7 @@ const TimelinePost = () => {
     <div className="mt-6">
       {isLoading && (
         <div className="loading-spinner-container">
-        <Circles height={80} width={80} color="#5FBDFF" ariaLabel="circles-loading" visible={true} />
+        <Bars height={80} width={80} color="#5FBDFF" ariaLabel="circles-loading" visible={true} />
       </div>
 
       )}
