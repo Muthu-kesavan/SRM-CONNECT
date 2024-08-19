@@ -4,7 +4,7 @@ import Linkify from 'react-linkify';
 import formatDistance from "date-fns/formatDistance";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { useSelector } from 'react-redux';
-import  Tooltip  from "@mui/material/Tooltip";
+import Tooltip from "@mui/material/Tooltip";
 import Favoriteborder from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import Comment from '@mui/icons-material/ChatBubbleOutlineOutlined';
@@ -29,19 +29,19 @@ const Post = ({ post, setData }) => {
     const fetchData = async () => {
       try {
         const findUser = await axios.get(`/users/find/${post.userId}`);
-        setUserData(findUser.data || {}); 
+        setUserData(findUser.data || {});
       } catch (err) {
-        console.log("error", err);
+        console.error("Error fetching user data:", err);
       }
     };
     fetchData();
-  }, [post.userId, post.likes]);
+  }, [post.userId]);
 
   useEffect(() => {
     const fetchCommentCount = async () => {
       try {
         const response = await axios.get(`/posts/comments/${post._id}`);
-        setCommentCount(response.data?.comments?.length || 0); 
+        setCommentCount(response.data?.comments?.length || 0);
       } catch (error) {
         console.error("Error fetching comment count:", error);
       }
@@ -67,9 +67,9 @@ const Post = ({ post, setData }) => {
         setData(newData.data);
       }
     } catch (err) {
-      console.log("Error", err)
+      console.error("Error liking post:", err);
     }
-  }
+  };
 
   const handleToggleComments = () => {
     setShowComments(!showComments);
@@ -77,7 +77,7 @@ const Post = ({ post, setData }) => {
 
   const handleAddComment = async () => {
     try {
-      const response = await axios.put(`/posts/reply/${post._id}`, {
+      await axios.put(`/posts/reply/${post._id}`, {
         text: replyText,
         userId: currentUser?._id,
       });
@@ -86,7 +86,7 @@ const Post = ({ post, setData }) => {
       setComments(fetchedComments.data?.comments || []);
       setReplyText('');
     } catch (err) {
-      console.log("Error adding comment:", err);
+      console.error("Error adding comment:", err);
     }
   };
 
@@ -115,6 +115,18 @@ const Post = ({ post, setData }) => {
   const handlePictureClick = () => {
     setEnlargePicture(!enlargePicture);
   };
+
+  // Debugging: Log the entire post object
+  useEffect(() => {
+    console.log("Post object:", post); // Log the full post object
+  }, [post]);
+
+  // Check if the URL is a video
+  const isVideo = (url) => {
+    const videoExtensions = ['.mp4', '.webm', '.ogg', '.avi', '.mov'];
+    return videoExtensions.some((ext) => url.includes(ext));
+  };
+
   return (
     <div>
       {userData && (
@@ -145,26 +157,27 @@ const Post = ({ post, setData }) => {
             <p> - {dateStr} ago </p>
           </div>
           <Linkify>
-          <p>{post.description}</p>
+            <p>{post.description}</p>
           </Linkify>
           <div className="flex flex-col items-center">
-            {post.video && (
+            {/* Render video if present */}
+            {post.video && isVideo(post.video) ? (
               <video
                 controls
                 src={post.video}
-                alt="Post Video"
                 className="rounded-lg max-w-full my-4"
               />
-            )}
-            {post.picture && (
-              <img
-                src={post.picture}
-                alt="Post Image"
-                className={`rounded-lg max-w-full my-4 cursor-pointer ${
-                  enlargePicture ? 'max-h-screen' : 'h-64'
-                }`}
-                onClick={handlePictureClick}
-              />
+            ) : (
+              post.picture && (
+                <img
+                  src={post.picture}
+                  alt="Post Image"
+                  className={`rounded-lg max-w-full my-4 cursor-pointer ${
+                    enlargePicture ? 'max-h-screen' : 'h-64'
+                  }`}
+                  onClick={handlePictureClick}
+                />
+              )
             )}
           </div>
           <Tooltip title="Likes" arrow>
@@ -222,8 +235,6 @@ const Post = ({ post, setData }) => {
       )}
     </div>
   );
-  
-
 };
 
 export default Post;

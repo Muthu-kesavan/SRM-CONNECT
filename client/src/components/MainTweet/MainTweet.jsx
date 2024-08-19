@@ -30,23 +30,26 @@ const MainTweet = () => {
     const fileName = new Date().getTime() + file.name;
     const storageRef = ref(storage, fileName);
     const uploadTask = uploadBytesResumable(storageRef, file);
-
+  
     try {
       await uploadTask;
-
+  
       const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-
+  
+      
       const submitTweet = await axios.post("/posts", {
         userId: currentUser._id,
         description: tweetText,
-        picture: downloadURL,
+        picture: file.type.startsWith('image/') ? downloadURL : undefined,
+        video: file.type.startsWith('video/') ? downloadURL : undefined,
       });
-
-      console.log(submitTweet);
+  
+      console.log('Post Submitted:', submitTweet);
     } catch (error) {
-      console.error("Error uploading image:", error);
+      console.error("Error uploading image or video:", error);
     }
   };
+  
 
   const handleIconClick = () => {
     document.getElementById('pictureInput').click();
@@ -107,7 +110,7 @@ const MainTweet = () => {
         {pictureInfo && (
           <p className="text-blue-400">{pictureInfo}</p>
         )}
-        <Tooltip title="Picture" arrow>
+        <Tooltip title="Media" arrow>
           <button
             type="button"
             onClick={handleIconClick}

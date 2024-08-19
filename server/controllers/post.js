@@ -15,6 +15,9 @@ export const createPost = async (req, res, next) => {
   try {
     const { description, picture, video } = req.body;
 
+    // Log incoming data for debugging
+    console.log('Incoming Data:', { description, picture, video });
+
     const userId = req.user.id;
     let post;
 
@@ -36,11 +39,15 @@ export const createPost = async (req, res, next) => {
 
     const savedPost = await post.save();
 
+    // Log saved post for debugging
+    console.log('Saved Post:', savedPost);
+
     res.status(200).json(savedPost);
   } catch (err) {
     handleError(500, err, res);
   }
 };
+
 
 
 export const deletePost = async (req, res, next) => {

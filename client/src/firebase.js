@@ -6,12 +6,13 @@ import { initializeApp } from "firebase/app";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyAU8mBDYwOUZrjVWJHUz6jYE2Wf-cBqygY",
-  authDomain: "srm-connect-007.firebaseapp.com",
-  projectId: "srm-connect-007",
-  storageBucket: "srm-connect-007.appspot.com",
-  messagingSenderId: "452187620581",
-  appId: "1:452187620581:web:930e0802cfd1549da7c00c"
+  apiKey: "AIzaSyD8txG6twGFvpbjckU0OBnrqCwEZ2gVtyw",
+  authDomain: "new-srmconnect.firebaseapp.com",
+  projectId: "new-srmconnect",
+  storageBucket: "new-srmconnect.appspot.com",
+  messagingSenderId: "630631976058",
+  appId: "1:630631976058:web:298f64338d20bfafeeffc3",
+  measurementId: "G-58J79LFVTY"
 };
 
 // Initialize Firebase
